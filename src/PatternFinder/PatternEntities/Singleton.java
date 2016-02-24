@@ -24,6 +24,7 @@ public class Singleton extends DesignPattern {
 
     public void setSingleton(Participant singleton) {
         this.singleton = singleton;
+        super.addParticipant(singleton);
     }
     
     public boolean isEmpty() {

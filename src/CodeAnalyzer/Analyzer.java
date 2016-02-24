@@ -14,6 +14,7 @@ import PatternFinder.MVCFinder;
 import PatternFinder.ORMFinder;
 import PatternFinder.PatternEntities.DesignPattern;
 import PatternFinder.SingletonFinder;
+import ResultsManager.XMLCreator;
 import ResultsManager.XMLParser;
 import java.io.BufferedReader;
 import java.io.File;
@@ -28,6 +29,7 @@ import java.util.regex.Pattern;
 import org.jdom2.Element;
 
 public class Analyzer {
+    //This attribute will contain the root directory of the project to analyze
     private File mainDirectory;
 
     public Analyzer(String mainPath) {
@@ -66,9 +68,10 @@ public class Analyzer {
         
         List<DesignPattern> patterns = analyzer.executeFinders(projPackages, framePackages, framework);
         
-        patterns.stream().forEach((dp) -> {
-            System.out.println(dp.toString() + "\n====================================================\n");
-        });
+        XMLCreator xml = new XMLCreator(patterns);
+        xml.createXMLFile("results/res.xml");
+        //System.out.println("XML:\n" + xml.generatePatternListXML());
+        
     }
 
     /**

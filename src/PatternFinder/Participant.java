@@ -13,9 +13,9 @@ import java.util.Objects;
 
 public class Participant {
     
-    public String name;
-    public String role;
-    public String path;
+    private String name;
+    private String role;
+    private String path;
 
     public Participant(String name, String role) {
         this.name = name;
@@ -25,6 +25,30 @@ public class Participant {
     public Participant(String name, String role, String path) {
         this.name = name;
         this.role = role;
+        this.path = path;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
         this.path = path;
     }
 

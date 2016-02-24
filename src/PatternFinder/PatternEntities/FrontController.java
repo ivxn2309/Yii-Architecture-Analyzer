@@ -24,6 +24,7 @@ public class FrontController extends DesignPattern {
 
     public void setFrontController(Participant frontController) {
         this.frontController = frontController;
+        super.addParticipant(frontController);
     }
 
     public Participant getDispatcher() {
@@ -32,6 +33,7 @@ public class FrontController extends DesignPattern {
 
     public void setDispatcher(Participant dispatcher) {
         this.dispatcher = dispatcher;
+        super.addParticipant(dispatcher);
     }
     
     public boolean isEmpty() {

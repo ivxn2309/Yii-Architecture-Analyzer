@@ -45,15 +45,15 @@ public class MVCFinder implements Finder {
                         break;
                     case 1:
                         participant = new Participant(name, "model", path);
-                        pattern.models.add(participant);
+                        pattern.addModel(participant);
                         break;
                     case 2:
                         participant = new Participant(name, "view", path);
-                        pattern.views.add(participant);
+                        pattern.addView(participant);
                         break;
                     case 3:
                         participant = new Participant(name, "controller", path);
-                        pattern.controllers.add(participant);
+                        pattern.addController(participant);
                         break;
                 }
             }
@@ -101,7 +101,7 @@ public class MVCFinder implements Finder {
         if(!viewsDir.exists()) return;
         File [] views = viewsDir.listFiles();
         for(File view : views) {
-            pattern.views.add(new Participant(view.getName(), "view", view.getAbsolutePath()));
+            pattern.addView(new Participant(view.getName(), "view", view.getAbsolutePath()));
         }
     }
     

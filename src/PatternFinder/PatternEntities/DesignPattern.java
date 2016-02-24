@@ -7,6 +7,10 @@
  */
 package PatternFinder.PatternEntities;
 
+import PatternFinder.Participant;
+import java.util.ArrayList;
+import java.util.List;
+
 public class DesignPattern {
     public static final int ALL_TIER = 0;
     public static final int DATA_TIER = 1;
@@ -15,10 +19,12 @@ public class DesignPattern {
     
     private String name;
     private int tier;
+    private List<Participant> parts;
 
     public DesignPattern(String name, int tier) {
         this.name = name;
         this.tier = tier;
+        parts = new ArrayList<>();
     }
 
     public String getName() {
@@ -35,6 +41,14 @@ public class DesignPattern {
 
     public void setTier(int tier) {
         this.tier = tier;
+    }
+    
+    public void addParticipant(Participant part){
+        parts.add(part);
+    }
+
+    public List<Participant> getParts() {
+        return parts;
     }
     
     @Override

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ORM extends DesignPattern {
-    public List<Participant> entities;
+    private List<Participant> entities;
     private Participant activeRecord;
 
     public ORM() {
@@ -27,6 +27,16 @@ public class ORM extends DesignPattern {
 
     public void setActiveRecord(Participant activeRecord) {
         this.activeRecord = activeRecord;
+        super.addParticipant(activeRecord);
+    }
+
+    public List<Participant> getEntities() {
+        return entities;
+    }
+    
+    public void addEntity(Participant entity) {
+        entities.add(entity);
+        super.addParticipant(entity);
     }
 
     public boolean isEmpty() {

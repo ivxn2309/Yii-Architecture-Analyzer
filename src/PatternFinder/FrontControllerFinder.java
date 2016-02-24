@@ -31,6 +31,10 @@ public class FrontControllerFinder implements Finder {
         //Check the call to the application config 
         String configLine = reader.findGroupRegEx(".*createWebApplication.*[(]{1}(.*)[)]{1}->run.*", 1);
         String locationLine;
+        
+        //If there is not a file config declared in the index
+        if(configLine == null || configLine.trim().equals("")) return false;
+        
         //If it contains $ means that it is being called with a variable
         if(configLine.contains("$"))
             locationLine = reader.findGroupRegEx(".*"+configLine.replace("$", "[$]")+".*=.*'/(.*)'.*[;].*", 1);

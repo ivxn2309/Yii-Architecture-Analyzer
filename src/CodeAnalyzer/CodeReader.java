@@ -31,6 +31,11 @@ public class CodeReader {
         }
     }
     
+    /**
+     * It finds a regular expresion into an entire file
+     * @param regex The regular expresion
+     * @return The line where the regular expresion was found
+     */
     public String findLineRegEx(String regex) {
         try {
             Pattern pattern = Pattern.compile(regex);
@@ -52,6 +57,12 @@ public class CodeReader {
         return null;
     }
     
+    /**
+     * It finds the first group that matches with a regular expresion 
+     * into an entire file
+     * @param regex The regular expresion
+     * @return The first group in one string
+     */
     public String findGroupRegEx(String regex) {
         try {
             Pattern pattern = Pattern.compile(regex);
@@ -73,6 +84,12 @@ public class CodeReader {
         return null;
     }
     
+    /**
+     * It finds the specified group that matches with an regular expresion
+     * @param regex The regular expresion
+     * @param group The group to return
+     * @return  An string with the group specified 
+     */
     public String findGroupRegEx(String regex, int group) {
         try {
             Pattern pattern = Pattern.compile(regex);
@@ -94,6 +111,13 @@ public class CodeReader {
         return null;
     }
     
+    /**
+     * Analyzes the code and obtain the value asigned for a variable 
+     * in one specific line
+     * @param var The variable's name
+     * @param line The line to search
+     * @return The value asigned to that variable else null
+     */
     public String getValueFromVar(String var, String line) {
         if(line == null) return null;
         String regex = "[$]{1}" + var + "[\\s]*=[\\s]*[\\w\\s\'\"()/.]+[\\s]*[;]{1}";
@@ -106,15 +130,6 @@ public class CodeReader {
         line = line.replaceAll("^\\s+|\\s+$", "");
         return line;
     }
-    
-     /*
-    public static void main(String[] args) {
-        CodeReader r = new CodeReader(new File("text.txt"));
-        String line = "$yii=dirname(__FILE__).'/../../framework/yii.php';";
-        System.out.println("> " + r.getValueFromVar("yii", line));
-    }
-*/
-    
 
     public File getFile() {
         return file;

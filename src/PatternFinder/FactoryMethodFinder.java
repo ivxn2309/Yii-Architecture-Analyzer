@@ -47,7 +47,9 @@ public class FactoryMethodFinder implements Finder {
                         case 1: pattern.setFactoryMethod(participant);
                         break;
                         
-                        case 2: pattern.setProduct(participant);
+                        case 2: 
+                            participant.setRole("Product");
+                            pattern.setProduct(participant);
                         break;
                     }
                 }

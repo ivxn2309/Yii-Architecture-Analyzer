@@ -13,15 +13,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MVC extends DesignPattern {
-    public List<Participant> models;
-    public List<Participant> views;
-    public List<Participant> controllers;
+    private List<Participant> models;
+    private List<Participant> views;
+    private List<Participant> controllers;
 
     public MVC() {
         super("MVC", DesignPattern.ALL_TIER);
         models = new ArrayList<>();
         views = new ArrayList<>();
         controllers = new ArrayList<>();
+    }
+
+    public List<Participant> getModels() {
+        return models;
+    }
+
+    public List<Participant> getViews() {
+        return views;
+    }
+
+    public List<Participant> getControllers() {
+        return controllers;
+    }
+    
+    public void addModel(Participant model) {
+        models.add(model);
+        super.addParticipant(model);
+    }
+    
+    public void addView(Participant view) {
+        views.add(view);
+        super.addParticipant(view);
+    }
+    
+    public void addController(Participant controller) {
+        controllers.add(controller);
+        super.addParticipant(controller);
     }
     
     public boolean isEmpty() {

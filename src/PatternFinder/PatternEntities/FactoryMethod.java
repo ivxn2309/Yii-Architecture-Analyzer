@@ -25,6 +25,7 @@ public class FactoryMethod extends DesignPattern {
 
     public void setFactory(Participant factory) {
         this.factory = factory;
+        super.addParticipant(factory);
     }
 
     public Participant getFactoryMethod() {
@@ -33,6 +34,7 @@ public class FactoryMethod extends DesignPattern {
 
     public void setFactoryMethod(Participant factoryMethod) {
         this.factoryMethod = factoryMethod;
+        super.addParticipant(factoryMethod);
     }
 
     public Participant getProduct() {
@@ -41,6 +43,7 @@ public class FactoryMethod extends DesignPattern {
 
     public void setProduct(Participant product) {
         this.product = product;
+        super.addParticipant(product);
     }
     
     public boolean isEmpty() {

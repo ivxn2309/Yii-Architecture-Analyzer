@@ -37,7 +37,7 @@ public class ORMFinder implements Finder {
                 Participant participant;
                 if (isEntity(path)) {
                     participant = new Participant(name, "entity", path);
-                    pattern.entities.add(participant);
+                    pattern.addEntity(participant);
                 }
             });
         });
@@ -61,12 +61,23 @@ public class ORMFinder implements Finder {
         return !pattern.isEmpty();
     }
     
+    /**
+     * It determines if the specified path belongs to a model because an entity 
+     * and a model is the same for yii
+     * @param path The path of the file that contains the object
+     * @return A boolean value that represents if is an entity or not
+     */
     private boolean isEntity(String path) {
         Pattern regex = Pattern.compile(".+protected[/\\\\]models.+[.]php");
         Matcher matcher = regex.matcher(path);
         return matcher.find();
     }
     
+    /**
+     * it searches for the CActiveRecord using the path of the file
+     * @param path The path of the file
+     * @return A boolean value, true if it found the active record else returns false
+     */
     private boolean isActiveRecord(String path) {
         Pattern regex = Pattern.compile(".+db[/\\\\].+[/\\\\].*CActiveRecord[.]{1}php");
         Matcher matcher = regex.matcher(path);
