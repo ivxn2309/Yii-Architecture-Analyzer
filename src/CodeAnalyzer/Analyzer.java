@@ -3,7 +3,7 @@
  * @date February 2016
  * Yii Architecture Analyzer Plugin
  * 
- * This is the main class which manages all the plugin
+ * This is the main class which manages all the analyzer
  */
 
 package CodeAnalyzer;
@@ -44,16 +44,24 @@ public class Analyzer {
     }
 
     public static void main(String[] args) throws IOException {
-        args = new String [] {"E:\\workspace\\www\\yii\\demos\\blog"};
+        args = new String [] {"-xml", "E:\\workspace\\www\\yii\\demos\\blog"};
+        if(!verifyInput(args)) return;
+        
+        System.out.println("====================================================================");
+        System.out.println("================== Yii Architecture Analyzer =======================");
+        System.out.println("====================================================================");
+        
+        boolean xmlReport = args[0].equals("-xml");
+        int path = xmlReport ? 1 : 0;
         
         //Initialize main object
-        Analyzer analyzer = new Analyzer(args[0]);
+        Analyzer analyzer = new Analyzer(args[path]);
         if (!analyzer.getMainDirectory().exists()) return;
         if (!analyzer.getMainDirectory().isDirectory()) return;
         
         // Detect classes in project
         String project = analyzer.getMainDirectory().getAbsolutePath();
-        //analyzer.generateSummary(project, "results/proj-summary.xml");
+        analyzer.generateSummary(project, "results/proj-summary.xml");
         
         // Find location of framework and detect its classes too
         File framework = analyzer.locateFramework(project);
@@ -67,11 +75,42 @@ public class Analyzer {
         List<Element> framePackages = parser.getChildrenObjects("package");
         
         List<DesignPattern> patterns = analyzer.executeFinders(projPackages, framePackages, framework);
+        for(DesignPattern pattern : patterns) {
+            System.out.println(pattern);
+            System.out.println("====================================================================");
+        }
         
-        XMLCreator xml = new XMLCreator(patterns);
-        xml.createXMLFile("results/res.xml");
-        //System.out.println("XML:\n" + xml.generatePatternListXML());
+        if(xmlReport) {
+            XMLCreator xml = new XMLCreator(patterns);
+            xml.createXMLFile("results/res.xml");
+            //System.out.println("XML:\n" + xml.generatePatternListXML());
+        }
+        System.out.println("Done!!...");
+    }
+    
+    private static boolean verifyInput(String [] args) {
+        if(args.length > 3) return usage();
+        if(args.length == 2 && !args[0].equals("-xml")) return usage();
         
+        int i = 0;
+        if(args.length == 2) i = 1;
+        
+        //if there is only one argument
+        File file = new File(args[i]);
+        if(!file.exists()) {
+            System.out.println("The directory does not exist");
+            return false;
+        }
+        if(!file.isDirectory()) {
+            System.out.println("The path does not belong to a directory");
+            return false;
+        }
+        return true;
+    }
+    
+    private static boolean usage() {
+        System.out.println("Usage: java CodeAnalyzer.Analyzer [-xml] 'absolute/path/to/your/project'");
+        return false;
     }
 
     /**

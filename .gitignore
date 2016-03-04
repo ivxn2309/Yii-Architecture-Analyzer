@@ -35,3 +35,4 @@ test/
 
 # Temporary ignore
 results/
+/dist/

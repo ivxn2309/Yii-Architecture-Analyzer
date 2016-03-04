@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin name="Yii Architecture Analyzer" author="Ivan Tovar" version="1.0">
+    <compile so="windows">javac -cp .;lib\jdom-2.0.6.jar CodeAnalyzer\Analyzer.java</compile>
+    <compile so="linux">javac -cp .:lib/jdom-2.0.6.jar CodeAnalyzer/Analyzer.java</compile>
+    <button>
+        <name>Start</name>
+        <image>img/start.png</image>
+        <command so="windows">java -cp .:lib/jdom-2.0.6.jar CodeAnalyzer.Analyzer</command>
+        <command so="linux">java -cp .;lib\jdom-2.0.6.jar CodeAnalyzer.Analyzer</command>
+    </button>
+</plugin>
