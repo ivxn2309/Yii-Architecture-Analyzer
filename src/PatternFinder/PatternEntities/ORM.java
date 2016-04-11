@@ -7,18 +7,21 @@
  */
 package PatternFinder.PatternEntities;
 
-import PatternFinder.Participant;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ORM extends DesignPattern {
     private List<Participant> entities;
     private Participant activeRecord;
+    
+    private Participant dataSource;
 
     public ORM() {
-        super("Object Relational Mapper", DesignPattern.DATA_TIER);
+        super("Object Relational Mapper", DesignPattern.DATA_TIER, DesignPattern.MODEL_MVC);
         entities = new ArrayList<>();
         activeRecord = null;
+        
+        dataSource = new Participant("Data Source", "Data Source");
     }
 
     public Participant getActiveRecord() {
@@ -51,5 +54,13 @@ public class ORM extends DesignPattern {
         orm = orm + "Entities > " + entities + "\n";
         orm = orm + "ActiveRecord > " + activeRecord;
         return orm;
+    }
+    
+    public void generateAssociations() { 
+        dataSource.addAssociation(activeRecord);
+        activeRecord.addAssociation(dataSource);
+        
+        for(Participant part : entities)
+            activeRecord.addAssociation(part);
     }
 }

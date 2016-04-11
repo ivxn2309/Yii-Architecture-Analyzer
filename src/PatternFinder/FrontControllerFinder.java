@@ -8,6 +8,7 @@
 
 package PatternFinder;
 
+import PatternFinder.PatternEntities.Participant;
 import CodeAnalyzer.CodeReader;
 import PatternFinder.PatternEntities.DesignPattern;
 import PatternFinder.PatternEntities.FrontController;
@@ -69,6 +70,7 @@ public class FrontControllerFinder implements Finder {
 
     @Override
     public DesignPattern getPattern() {
+        pattern.generateAssociations();
         return pattern;
     }
     

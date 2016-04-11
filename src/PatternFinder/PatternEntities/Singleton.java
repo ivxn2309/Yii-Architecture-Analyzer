@@ -8,13 +8,11 @@
 
 package PatternFinder.PatternEntities;
 
-import PatternFinder.Participant;
-
 public class Singleton extends DesignPattern {
     private Participant singleton;
 
     public Singleton() {
-        super("Singleton", DesignPattern.PRESENTATION_TIER);
+        super("Singleton", DesignPattern.PRESENTATION_TIER, DesignPattern.NONE);
         this.singleton = null;
     }
 
@@ -38,4 +36,7 @@ public class Singleton extends DesignPattern {
         return single;
     }
     
+    public void generateAssociations() { 
+        //This pattern has not association between its participants
+    }
 }

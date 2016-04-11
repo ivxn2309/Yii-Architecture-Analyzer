@@ -7,6 +7,7 @@
  */
 
 package PatternFinder;
+import PatternFinder.PatternEntities.Participant;
 import PatternFinder.PatternEntities.DesignPattern;
 import PatternFinder.PatternEntities.MVC;
 import java.io.File;
@@ -107,6 +108,7 @@ public class MVCFinder implements Finder {
     
     @Override
     public DesignPattern getPattern() {
+        pattern.generateAssociations();
         return pattern;
     }
 }

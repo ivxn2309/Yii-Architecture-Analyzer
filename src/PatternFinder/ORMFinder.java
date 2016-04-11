@@ -8,6 +8,7 @@
 
 package PatternFinder;
 
+import PatternFinder.PatternEntities.Participant;
 import PatternFinder.PatternEntities.DesignPattern;
 import PatternFinder.PatternEntities.ORM;
 import java.util.List;
@@ -86,6 +87,7 @@ public class ORMFinder implements Finder {
     
     @Override
     public DesignPattern getPattern() {
+        pattern.generateAssociations();
         return pattern;
     }
     

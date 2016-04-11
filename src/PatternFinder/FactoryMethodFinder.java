@@ -8,6 +8,7 @@
 
 package PatternFinder;
 
+import PatternFinder.PatternEntities.Participant;
 import CodeAnalyzer.CodeReader;
 import PatternFinder.PatternEntities.DesignPattern;
 import PatternFinder.PatternEntities.FactoryMethod;
@@ -35,8 +36,8 @@ public class FactoryMethodFinder implements Finder {
                 Element fileDetails = object.getChild("file");
                 String path = fileDetails.getAttributeValue("name");
                 
-                //Evaluate the oobjects
-                int result = isFactoryMethod(name);
+                //Evaluate the objects
+                int result = isFactoryMethod(name, path);
                 //If result is 0 means that the object does not belong to the pattern
                 if(result != 0) {
                     Participant participant;
@@ -44,7 +45,8 @@ public class FactoryMethodFinder implements Finder {
                     
                     //Join the pattern
                     switch(result) {                        
-                        case 1: pattern.setFactoryMethod(participant);
+                        case 1: 
+                            pattern.setFactoryMethod(participant);
                         break;
                         
                         case 2: 
@@ -61,6 +63,7 @@ public class FactoryMethodFinder implements Finder {
 
     @Override
     public DesignPattern getPattern() {
+        pattern.generateAssociations();
         return pattern;
     }
     
@@ -69,7 +72,8 @@ public class FactoryMethodFinder implements Finder {
      * @param name The name of the file
      * @return An integer is returned depending of its name
      */
-    private int isFactoryMethod(String name) {
+    private int isFactoryMethod(String name, String path) {
+        if(path.endsWith("yiilite.php")) return 0;
         if(name.matches("CWidgetFactory")) return 1;
         if(name.matches("CWidget")) return 2;
         return 0;

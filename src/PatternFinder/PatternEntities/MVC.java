@@ -8,7 +8,6 @@
 
 package PatternFinder.PatternEntities;
 
-import PatternFinder.Participant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class MVC extends DesignPattern {
     private List<Participant> controllers;
 
     public MVC() {
-        super("MVC", DesignPattern.ALL_TIER);
+        super("MVC", DesignPattern.NONE, DesignPattern.ALL_MVC);
         models = new ArrayList<>();
         views = new ArrayList<>();
         controllers = new ArrayList<>();
@@ -70,4 +69,26 @@ public class MVC extends DesignPattern {
         return mvc;
     }
     
+    public void generateAssociations() { 
+        boolean viewsAdded = false;
+        for(Participant model: models) {
+            String modelName = model.getName();
+            for(Participant controller: controllers) {
+                String contrName = controller.getName().replace("Controller", "");
+                if(contrName.equals(modelName)) {
+                    model.addAssociation(controller);
+                    controller.addAssociation(model);
+                }
+                if(!viewsAdded) {
+                    for(Participant view: views) {
+                        if(contrName.equalsIgnoreCase(view.getName())) {
+                            controller.addAssociation(view);
+                            view.addAssociation(controller);
+                        }
+                    }
+                }
+            }
+            viewsAdded = true;            
+        }
+    }
 }

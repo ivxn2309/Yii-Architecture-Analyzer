@@ -7,8 +7,10 @@
  * of any pattern.
  */
 
-package PatternFinder;
+package PatternFinder.PatternEntities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Participant {
@@ -16,6 +18,7 @@ public class Participant {
     private String name;
     private String role;
     private String path;
+    private List<Participant> brothers;
 
     public Participant(String name, String role) {
         this.name = name;
@@ -50,6 +53,15 @@ public class Participant {
 
     public void setPath(String path) {
         this.path = path;
+    }
+    
+    public void addAssociation(Participant part) {
+        if(brothers == null) brothers = new ArrayList<>();
+        brothers.add(part);
+    }
+    
+    public List<Participant> getAssociations() {
+        return brothers;
     }
 
     @Override

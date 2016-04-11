@@ -8,6 +8,7 @@
 
 package PatternFinder;
 
+import PatternFinder.PatternEntities.Participant;
 import CodeAnalyzer.CodeReader;
 import PatternFinder.PatternEntities.DesignPattern;
 import java.io.File;
@@ -65,6 +66,7 @@ public class SingletonFinder implements Finder {
     
     @Override
     public DesignPattern getPattern() {
+        pattern.generateAssociations();
         return pattern;
     }
     

@@ -7,8 +7,8 @@
 <!-- the Compile on Save feature is turned off for the project. -->
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
-<project name="Yii_Architecture_Analyzer_(Plug-in)" default="default" basedir=".">
-    <description>Builds, tests, and runs the project Yii Architecture Analyzer (Plug-in).</description>
+<project name="Architecture_Analyzer_Yii" default="default" basedir=".">
+    <description>Builds, tests, and runs the project Architecture Analyzer Yii.</description>
     <import file="nbproject/build-impl.xml"/>
     <!--
 
@@ -58,7 +58,7 @@
 
     An example of overriding the target for project execution could look like this:
 
-        <target name="run" depends="Yii_Architecture_Analyzer_(Plug-in)-impl.jar">
+        <target name="run" depends="Architecture_Analyzer_Yii-impl.jar">
             <exec dir="bin" executable="launcher.exe">
                 <arg file="${dist.jar}"/>
             </exec>

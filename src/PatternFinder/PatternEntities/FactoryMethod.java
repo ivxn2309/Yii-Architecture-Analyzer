@@ -8,15 +8,13 @@
 
 package PatternFinder.PatternEntities;
 
-import PatternFinder.Participant;
-
 public class FactoryMethod extends DesignPattern {
     private Participant factory;
     private Participant factoryMethod;
     private Participant product;
 
     public FactoryMethod() {
-        super("Factory Method", DesignPattern.PRESENTATION_TIER);
+        super("Factory Method", DesignPattern.PRESENTATION_TIER, DesignPattern.NONE);
     }
 
     public Participant getFactory() {
@@ -61,5 +59,10 @@ public class FactoryMethod extends DesignPattern {
         fm = fm + "Factory Method > " + factoryMethod + "\n";
         fm = fm + "Product > " + product;
         return fm;
+    }
+    
+    public void generateAssociations() {
+        factoryMethod.addAssociation(factory);
+        factoryMethod.addAssociation(product);
     }
 }

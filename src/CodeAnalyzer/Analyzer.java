@@ -44,7 +44,7 @@ public class Analyzer {
     }
 
     public static void main(String[] args) throws IOException {
-        args = new String [] {"-xml", "E:\\workspace\\www\\yii\\demos\\blog"};
+        //args = new String [] {"-xml", "D:\\workspace\\www\\yii\\demos\\blog", "results.xml"};
         if(!verifyInput(args)) return;
         
         System.out.println("====================================================================");
@@ -52,21 +52,26 @@ public class Analyzer {
         System.out.println("====================================================================");
         
         boolean xmlReport = args[0].equals("-xml");
-        int path = xmlReport ? 1 : 0;
+        int projPath = xmlReport ? 1 : 0;
+        int resultPath = xmlReport ? 2 : 1;
+        
         
         //Initialize main object
-        Analyzer analyzer = new Analyzer(args[path]);
+        Analyzer analyzer = new Analyzer(args[projPath]);
         if (!analyzer.getMainDirectory().exists()) return;
         if (!analyzer.getMainDirectory().isDirectory()) return;
         
         // Detect classes in project
         String project = analyzer.getMainDirectory().getAbsolutePath();
-        analyzer.generateSummary(project, "results/proj-summary.xml");
+        boolean ok = analyzer.generateSummary(project, "results/proj-summary.xml");
+        if(!ok) return;
         
         // Find location of framework and detect its classes too
         File framework = analyzer.locateFramework(project);
-        if(!new File("results/fram-summary.xml").exists())
-            analyzer.generateSummary(framework.getAbsolutePath(), "results/fram-summary.xml");
+        if(ok && !new File("results/fram-summary.xml").exists())
+            ok = analyzer.generateSummary(framework.getAbsolutePath(), "results/fram-summary.xml");
+        
+        if(!ok) return;
         
         //Retrieve the packages in the project and in the framework
         XMLParser parser = new XMLParser("results/proj-summary.xml");
@@ -82,7 +87,7 @@ public class Analyzer {
         
         if(xmlReport) {
             XMLCreator xml = new XMLCreator(patterns);
-            xml.createXMLFile("results/res.xml");
+            xml.createXMLFile("results/" + args[resultPath]);
             //System.out.println("XML:\n" + xml.generatePatternListXML());
         }
         System.out.println("Done!!...");
@@ -90,10 +95,11 @@ public class Analyzer {
     
     private static boolean verifyInput(String [] args) {
         if(args.length > 3) return usage();
-        if(args.length == 2 && !args[0].equals("-xml")) return usage();
+        if(args.length < 2) return usage();
+        if(!args[0].equals("-xml")) return usage();
         
         int i = 0;
-        if(args.length == 2) i = 1;
+        if(args.length == 3) i = 1;
         
         //if there is only one argument
         File file = new File(args[i]);
@@ -109,7 +115,7 @@ public class Analyzer {
     }
     
     private static boolean usage() {
-        System.out.println("Usage: java CodeAnalyzer.Analyzer [-xml] 'absolute/path/to/your/project'");
+        System.out.println("Usage: java CodeAnalyzer.Analyzer -xml 'absolute/path/to/your/project' name_of_your_file.xml");
         return false;
     }
 
@@ -127,6 +133,11 @@ public class Analyzer {
             File phar = new File("pdepend.phar");
             File proj = new File(pathToProject);
             File dest = new File(result);
+            
+            if(!phar.exists()) {
+                System.out.println("The library PDepend is missing");
+                return false;
+            }
 
             String [] commands = new String[] {
                 "php", 
@@ -150,15 +161,22 @@ public class Analyzer {
                     return false;
                 }
             }
-            System.out.println("\n====================================================\n");
+            System.out.println("\n====================================================================\n");
             return true;
-        } 
+        }
+        
         catch (IOException ex) {
-            System.out.println("Error: " + ex.getMessage());
+            System.out.println("Error: ");
+            System.out.println("> Verify the permissions in the specified directories");
+            System.out.println("> Verify the permissions in the files to read");
+            System.out.println("> Verify your installation of PHP");
+            System.out.println("> Verify PHP is in your PATH variable");
+            System.out.println("> Verify the integrity of the PDepend library");
             return false;
-        } 
+        }
         finally {
-            reader.close();
+            if(reader != null)
+                reader.close();
         }
     }
     
@@ -185,7 +203,7 @@ public class Analyzer {
             
             // if the framework can not be located because it is not declared in index.php
             if(line == null) {
-                System.err.println("Error: The framework can not be located");
+                System.out.println("Error: The framework can not be located");
                 return null;
             }
             
@@ -214,7 +232,7 @@ public class Analyzer {
         finally {
             reader.close();
         }
-        System.err.println("Error: The framework can not be located");
+        System.out.println("Error: The framework can not be located");
         return null;
     }
     
